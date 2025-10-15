@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void combi(vector<int>& str, vector<vector<int>>& res, int rem, int idx,
+               vector<int>& candidates) {
+        if (rem == 0) {
+            res.push_back(str);
+            return;
+        }
+        if (rem < 0 || idx >= candidates.size()) {
+            return;
+        }
+        str.push_back(candidates[idx]);
+        combi(str, res, rem - candidates[idx], idx, candidates);
+
+        str.pop_back();
+        combi(str, res, rem, idx + 1, candidates);
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> str;
+
+        combi(str, res, target, 0, candidates);
+        return res;
+    }
+};
