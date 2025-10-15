@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.size();
+        vector<char>temp;
+        int l = 0;
+        int maxsize = 0;
+        if(s.size()==1&&s[0]==' '){
+            return 1;
+        }
+        if(s.empty()){
+            return 0;
+        }
+        while (l < n) {
+
+            if (find(temp.begin(),temp.end(),s[l])==temp.end()) {
+                temp.push_back(s[l]);
+                l++;
+            } else {
+                maxsize = max(maxsize, (int)temp.size());
+                while (temp[0] != s[l]) {
+                    temp.erase(temp.begin());
+                }
+                temp.erase(temp.begin());
+                temp.push_back(s[l]);
+                l++;
+            }
+        }
+         maxsize = max(maxsize, (int)temp.size());
+        return maxsize;
+    }
+};
