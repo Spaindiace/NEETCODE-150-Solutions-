@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int reverse(int x) {
+        string s;
+        vector<string> str;
+        string sig;
+
+        string p = to_string(x);
+        for (auto& k : p) {
+            if (k == '-') {
+                sig += k;
+            } else {
+                str.push_back(string(1, k));
+            }
+        }
+        std::reverse(str.begin(), str.end());
+        if (!sig.empty()) {
+            s += sig[0];
+        }
+        for (auto& k : str) {
+            s += k;
+        }
+        long long res = stoll(s);
+        if (res > INT_MAX || res < INT_MIN) {
+            return 0;
+        }
+        return (int)res;
+    }
+};
