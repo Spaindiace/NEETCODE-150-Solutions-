@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> vis(m, vector<int>(n, 0));
+        queue<pair<int, int>> q;
+        vector<pair<int, int>> str;
+        int nrow[] = {0, +1, 0, -1};
+        int ncol[] = {+1, 0, -1, 0};
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    str.push_back(make_pair(i, j));
+                    vis[i][j] = 1;
+                    q.push({i, j});
+                }
+            }
+        }
+        int count = 0;
+        while (!q.empty()) {
+            int siz = q.size();
+            bool got=false;
+            for (int i = 0; i < siz; i++) {
+                int r = q.front().first;
+                int c = q.front().second;
+                q.pop();
+                for (int k = 0; k < 4; k++) {
+                    int rx = r + nrow[k];
+                    int cy = c + ncol[k];
+                    if (rx >= 0 && rx < m && cy >= 0 && cy < n &&
+                        !vis[rx][cy] && grid[rx][cy] == 1) {
+                        q.push({rx, cy});
+                        vis[rx][cy] = 1;
+                        got=true;
+                    }
+                }
+            }
+           if(got) count++;
+        }
+
+        int flag = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1 && !vis[i][j]) {
+                    flag++;
+                    break;
+                }
+            }
+        }
+        if (flag == 0) {
+            return count;
+        } else {
+            return -1;
+        }
+    }
+};
