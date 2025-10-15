@@ -1,0 +1,31 @@
+class Solution {
+private:
+    void rec(string& s, int op, int clo, vector<string>& res) {
+        if (op == 0 && clo == 0) {
+            res.push_back(s);
+            return;
+        }
+        if (op > 0) {
+            s.push_back('(');
+            rec(s, op - 1, clo, res);
+            s.pop_back();
+        }
+        if (clo > 0) {
+            if (clo > op) {
+                s.push_back(')');
+                rec(s, op, clo - 1, res);
+                s.pop_back();
+            }
+        }
+    }
+
+public:
+    vector<string> generateParenthesis(int n) {
+        string s;
+        vector<string> res;
+        int op = n;
+        int clo = n;
+        rec(s, op, clo, res);
+        return res;
+    }
+};
